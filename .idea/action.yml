@@ -1,0 +1,22 @@
+name: 'Asemic-cli command'
+description: 'Run asemic-cli commands'
+inputs:
+  version:
+    description: 'Asemic-cli version'
+    required: true
+    default: 'latest'
+  token:
+    description: 'Asemic-cli token'
+    required: true
+  app_id_dir:
+    description: 'Asemic-cli app id directory'
+    required: true
+  command:
+    description: 'Asemic-cli command'
+    required: true
+  run: |
+    curl -L -o asemic-cli https://github.com/Bedrock-Data-Project/asemic-cli/releases/${{ inputs.version }}/download/asemic-cli-ubuntu
+    chmod +x asemic-cli
+    export ASEMIC_API_TOKEN=${{ inputs.token }}
+    export ASEMIC_APP_ID_DIR=${{ inputs.app_id_dir }}
+    ./asemic-cli ${{ inputs.command }}
