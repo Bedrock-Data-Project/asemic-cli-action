@@ -14,9 +14,15 @@ inputs:
   command:
     description: 'Asemic-cli command'
     required: true
-  run: |
-    curl -L -o asemic-cli https://github.com/Bedrock-Data-Project/asemic-cli/releases/${{ inputs.version }}/download/asemic-cli-ubuntu
-    chmod +x asemic-cli
-    export ASEMIC_API_TOKEN=${{ inputs.token }}
-    export ASEMIC_APP_ID_DIR=${{ inputs.app_id_dir }}
-    ./asemic-cli ${{ inputs.command }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Run Asemic-cli'
+      run: |
+        curl -L -o asemic-cli https://github.com/Bedrock-Data-Project/asemic-cli/releases/${{ inputs.version }}/download/asemic-cli-ubuntu
+        chmod +x asemic-cli
+        export ASEMIC_API_TOKEN=${{ inputs.token }}
+        export ASEMIC_APP_ID_DIR=${{ inputs.app_id_dir }}
+        ./asemic-cli ${{ inputs.command }}
+      shell: bash
